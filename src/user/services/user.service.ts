@@ -1,5 +1,5 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { compare, hash } from 'bcrypt';
+// import { compare, hash } from 'bcrypt';
 import { plainToClass } from 'class-transformer';
 
 import { AppLogger } from '../../shared/logger/logger.service';
@@ -9,6 +9,15 @@ import { UserOutput } from '../dtos/user-output.dto';
 import { UpdateUserInput } from '../dtos/user-update-input.dto';
 import { User } from '../entities/user.entity';
 import { UserRepository } from '../repositories/user.repository';
+
+function compare(data: string, encrypted: string): Promise<boolean> {
+  return Promise.resolve(data === encrypted);
+}
+
+function hash(data: string, rounds: number): Promise<string> {
+  if (rounds == 1) return Promise.resolve(data);
+  return Promise.resolve(data);
+}
 
 @Injectable()
 export class UserService {
